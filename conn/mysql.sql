@@ -1,0 +1,63 @@
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,ALTER,CREATE TEMPORARY TABLES,LOCK TABLES ON ahu.* TO ahuname@'%' IDENTIFIED BY 'password';
+
+create table ahu_uinfo(
+	learn_num varchar(20) not null primary key,
+	name varchar(20) not null,
+	password varchar(40) not null,
+	class varchar(20) not null,
+	email varchar(20),
+	telephone varchar(20),
+	pic varchar(40),
+	age int
+)engine=myisam default charset=utf8;
+
+
+create table ahu_admin(
+	name varchar(20) not null primary key,
+	password varchar(40) not null,
+	priority int not null default 0,
+	email varchar(20),
+	telephone varchar(20),
+	pic varchar(40)
+)engine=myisam default charset=utf8;
+
+create table ahu_books(
+	book_num varchar(20),
+	book_name varchar(40),
+	is_borrow tinyint(2),
+	intro text,
+	jie_person varchar(40)
+)engine=myisam default charset=utf8;
+
+create table ahu_brr_book(
+	id int not null primary key auto_increment,
+	book_num varchar(20) not null,
+	learn_num varchar(20) not null,
+	start_time date not null,
+	retu_time date not null,
+	has_retu tinyint default 0 not null,
+	actual_retu date default null,
+	fine float default 0.0 not null
+)engine=myisam default charset=utf8;
+
+--------------------------------------------------------
+create table ahu_uinfo(
+        learn_num varchar(20) not null primary key,
+        name varchar(20) not null,
+        password varchar(40) not null,
+        class varchar(20) not null,
+        email varchar(20),
+        telephone varchar(20),
+        pic varchar(40) default '../img/default.png'
+)engine=myisam default charset=utf8;
+
+
+create table ahu_admin(
+        name varchar(20) not null primary key,
+        password varchar(40) not null,
+        priority int not null default 0,
+        email varchar(20),
+        telephone varchar(20),
+        pic varchar(40) default '../img/default.png'
+)engine=myisam default charset=utf8;
+

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="../css/register.css" rel="stylesheet" type="text/css"/>
+    <script src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var httpRequest;
+        function subClick(e){
+            e.preventDefault();
+            var form=document.getElementById("form");
+            var formData=new FormData(form);
+            httpRequest=new XMLHttpRequest();
+            httpRequest.onreadystatechange=handleResponse;
+            httpRequest.open("POST",form.action);
+            httpRequest.send(formData);
+        }
+        function clearIn(){
+            imgClick();
+            document.getElementById("mi").value="";
+            document.getElementById("password").value="";
+            document.getElementById("nPassword").value="";
+            document.getElementById("ver").value="";
+        }
+        function handleResponse(){
+            if(httpRequest.readyState==4&&httpRequest.status==200){
+                var response=httpRequest.responseText;
+                var res=eval("("+response+")");
+                var num=parseInt(res.Num);
+                switch(num){
+                    case 0:
+                        alert("输入有误！");
+                        clearIn();
+                        break;
+                    case 1:
+                        alert("教务处账号密码不匹配！");
+                        clearIn();
+                        break;
+                    case 2:
+                        alert("用户已注册！");
+                        clearIn();
+                        break;
+                    case 3:
+                        alert("注册成功！");
+                        location.href="u_zhuye.html";
+                        break;
+                    default:
+                        alert("输入有误！");
+                        clearIn();
+                        break;
+                }
+            }
+        }
+        function imgClick() {
+            var tu = document.getElementsByTagName("img")[0];
+            tu.src = tu.src + "?rand=" + Math.random();
+        }
+
+    </script>
+</head>
+<body>
+
+<div id="in_fm">
+    <form action="../php/register.php" method="POST" id="form">
+        <ul>
+            <li class="ym">
+                <a>学号：</a>
+            </li>
+            <li>
+                <input class="ymi" type="text" name="uName" maxlength="9"/>
+            </li>
+        </ul>
+        <ul style="height:44px">
+            <li class="ym" style="font-size:15px">
+                <a>教务密码：</a>
+            </li>
+            <li>
+                <input class="ymi" id="mi" type="password" name="jwPsw" maxlength="15"/>
+            </li>
+        </ul>
+        <ul style="height:44px">
+            <li class="ym">
+                <a>密码：</a>
+            </li>
+            <li>
+                <input class="ymi" type="password" name="password" id="password" maxlength="15"/>
+            </li>
+        </ul>
+        <ul style="height:44px">
+            <li class="ym" style="font-size:15px">
+                <a>验证密码：</a>
+            </li>
+            <li>
+                <input class="ymi"  type="password" name="nPassword" id="nPassword" maxlength="15"/>
+            </li>
+        </ul>
+        <ul>
+            <li class="ym">
+                <a>验证码：</a>
+            </li>
+            <li>
+                <input type="text" name="checkcode" style="width:50px;height:23px" maxlength="4" id="ver"/>
+                <img src="../php/checkcode.php" onclick="imgClick()"/>
+            </li>
+        </ul>
+        <ul style="margin-top:20px">
+            <li class="rbt">
+                <input class="bt" id="submit" type="submit" value="注册" onclick="subClick(event)"/>
+            </li>
+            <li class="rbt">
+                <input class="bt" type="reset" values="重置"/>
+            </li>
+        </ul>
+    </form>
+    <ul class="wz">
+        <li style="text-align: left;padding-left:3px">
+            <a href="../index.html">返回登陆</a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

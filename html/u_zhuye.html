@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" type="text/css" href="../css/u_zhuye.css"/>
+    <script src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function gai(obj) {
+            var ss = document.getElementById("m_xiang");
+            switch (obj.id) {
+                case "jie":
+                    ss.src = "u_jie.html";
+                    break;
+                case "huan":
+                    ss.src = "u_huan.html";
+                    break;
+                case "xin":
+                    ss.src = "u_xin.html";
+                    break;
+                case "yue":
+                    ss.src = "u_yue.html";
+                    break;
+                case "tui":
+                    desSession();
+                    break;
+            }
+        }
+        var http2;
+        function desSession() {
+            http2 = new XMLHttpRequest();
+            http2.onreadystatechange = heee;
+            http2.open("GET", "../php/user.php?getContent=2");
+            http2.send();
+        }
+        function heee() {
+            if (http2.readyState == 4 && http2.status == 200) {
+                location.href = "../index.html";
+            }
+        }
+
+        var httpRequest;
+        $(document).ready(function () {
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handleResponse;
+            httpRequest.open("GET", "../php/user.php?getContent=1");
+            httpRequest.send();
+        })
+        function handleResponse() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var response = httpRequest.responseText;
+                var res = eval("(" + response + ")");
+                var num = parseInt(res.Num);
+                switch (num) {
+                    case 1:
+                        handle1(res);
+                        break;
+                    default:
+                        location.href = "../index";
+                        break;
+                }
+            }
+        }
+        function handle1(res) {
+            document.getElementById("uXName").innerHTML = res.uXName;
+            document.getElementsByTagName("img")[0].src = res.uPic;
+            var pri = parseInt(res.priority);
+            if (pri == 1) {
+                var shman = document.getElementById("shman");
+                shman.hidden = false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="m_top">
+    <ul id="m_top_ul">
+        <li><a id="jie" href='#' onclick="gai(this)">借书</a></li>
+        <li><a id="huan" href='#' onclick="gai(this)">还书</a></li>
+        <li><a id="xin" href='#' onclick="gai(this)">信息</a></li>
+        <li><a id="yue" href="#" onclick="gai(this)">借阅情况</a></li>
+        <li><a id="tui" href='#' onclick="gai(this)">退出</a></li>
+        <div id="topinfo">
+            <img src="" title="修改头像"/><br/>
+            <a id="uXName"></a>
+        </div>
+    </ul>
+</div>
+<iframe id="m_xiang" src="u_jie.html" scrolling="auto"/>
+
+</body>
+</html>

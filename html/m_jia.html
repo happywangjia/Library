@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>加书</title>
+    <link href="../css/m_jia.css" type="text/css" rel="stylesheet"/>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/m_jia.js"></script>
+</head>
+<body>
+<div id="sss">
+    <form id="form" method="post" action="../php/addBook.php">
+        <table>
+            <tr>
+                <td>
+                    <a>序号：</a>
+                </td>
+                <td>
+                    <input id="shuNum" class="content" type="text" maxlength="20" name="shuNum">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a>书名：</a>
+                </td>
+                <td>
+                    <input type="text" id="shuName" class="content" maxlength="20" name="shuName">
+                </td>
+            </tr>
+        </table>
+        <textarea id="shuJie" name="shuJie"  maxlength="150" class="content"
+                  onfocus="if(value=='介绍，限150字'){value='';}"
+                  onblur="if(value==''){value='介绍，限150字';}" >介绍，限150字</textarea><br/>
+        <input type="submit" value="加书" onclick="addShu(event)">
+        <input type="reset" value="重置">
+
+    </form>
+</div>
+</body>
+</html>

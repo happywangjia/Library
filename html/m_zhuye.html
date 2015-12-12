@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员</title>
+    <link rel="stylesheet" type="text/css" href="../css/m_zhuye.css"/>
+    <script src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function gai(str) {
+            var ss = document.getElementById("m_xiang");
+            switch (str) {
+                case "jia":
+                    ss.src = "m_jia.html";
+                    break;
+                case "xin":
+                    ss.src = "m_xin.html";
+                    break;
+                case "shan":
+                    ss.src = "m_shan.html";
+                    break;
+                case "shman":
+                    ss.src = "m_shman.html";
+                    break;
+                case "tui":
+                    desSession();
+                    break;
+            }
+        }
+        var http2;
+        function desSession() {
+            http2 = new XMLHttpRequest();
+            http2.onreadystatechange = heee;
+            http2.open("GET", "../php/manager.php?getContent=2");
+            http2.send();
+        }
+        function heee() {
+            if (http2.readyState == 4 && http2.status == 200) {
+                location.href = "../index.html";
+            }
+        }
+
+        var httpRequest;
+        $(document).ready(function () {
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handleResponse;
+            httpRequest.open("GET", "../php/manager.php?getContent=1");
+            httpRequest.send();
+        })
+        function handleResponse() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var response = httpRequest.responseText;
+                var res = eval("(" + response + ")");
+                var num = parseInt(res.Num);
+                switch (num) {
+                    case 1:
+                        handle1(res);
+                        break;
+                    default:
+                        location.href = "../index";
+                        break;
+                }
+            }
+        }
+        function handle1(res) {
+            document.getElementById("mName").innerHTML = res.mName;
+            document.getElementsByTagName("img")[0].src = res.mPic;
+            var pri = parseInt(res.priority);
+            if (pri == 1) {
+                var shman = document.getElementById("shman");
+                shman.hidden = false;
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="m_top">
+    <ul id="m_top_ul">
+        <li><a id="jia" href='#' onclick="gai('jia')">添加图书</a></li>
+        <li><a id="shan" href='#' onclick="gai('shan')">删除用户</a></li>
+        <li id="shman" hidden><a href="#" onclick="gai('shman')">增删管理员</a></li>
+        <li><a id="xin" href='#' onclick="gai('xin')">信息</a></li>
+        <li><a id="tui" href='#' onclick="gai('tui')">退出</a></li>
+        <div id="topinfo">
+            <img src="" title="修改头像"/><br/>
+            <a id="mName"></a>
+        </div>
+    </ul>
+</div>
+<iframe id="m_xiang" src="m_jia.html" scrolling="no"/>
+</body>
+</html>

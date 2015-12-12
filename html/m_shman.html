@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除管理员</title>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/m_shman.js"></script>
+</head>
+<body>
+<div>
+    添加管理员<br/>
+
+    <form id="add">
+        <ul style="list-style-type:none">
+            <li>
+                管理员账号：<input type="text" id="name" style="width:100px;" maxlength="15" name="name"
+                onclick="document.getElementById(name).value=''"
+            />
+            </li>
+            <li>
+                管理员密码：<input id="pass" style="margin-top:10px;width:100px;" maxlength="15" type="password" name="password"
+                onclick="document.getElementById('pass').value=''"
+            />
+            </li>
+            <li>
+                <input style="margin-left:70px;margin-top:20px;width:80px;height:40px;" type="submit" value="添加"
+                       onclick="add(event)"
+                />
+            </li>
+        </ul>
+    </form>
+
+    删除管理员<br/>
+    <table style="border-collapse: collapse">
+    </table>
+
+</div>
+
+</body>
+</html>

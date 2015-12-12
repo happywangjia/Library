@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/index.js" ></script>
+</head>
+<body>
+<div id="in_fm">
+    <form action="php/login.php" method="POST" id="form">
+        <ul>
+            <li class="ym">
+                <a>用户名：</a>
+            </li>
+            <li>
+                <input class="ymi" type="text" name="name" maxlength="9"/>
+            </li>
+        </ul>
+        <ul style="height:44px">
+            <li class="ym">
+                <a>密&nbsp;&nbsp;&nbsp;&nbsp;码：</a>
+            </li>
+            <li>
+                <input class="ymi" id="mi" type="password" name="pass" maxlength="15"/>
+            </li>
+        </ul>
+        <ul>
+            <li class="ym">
+                <a>验证码：</a>
+            </li>
+            <li>
+                <input type="text" name="checkcode" style="width:50px;height:23px" maxlength="4" id="ver"/>
+                <img src="php/checkcode.php" onclick="imgClick()"/>
+            </li>
+        </ul>
+        <ul>
+            <li class="rbt" style="width:50px" dir="ltr">
+                <input type="radio" class="role" name="role" value="stu" checked/><a style="font-size:18px">学生</a>
+            </li>
+            <li class="rbt" dir="ltr">
+                <input type="radio" name="role" class="role" value="mana"/><a>管理员</a>
+            </li>
+
+        </ul>
+        <ul style="margin-top:20px">
+            <li class="rbt">
+                <input class="bt" id="submit" type="submit" value="登陆" onclick="subClick(event)"/>
+            </li>
+            <li class="rbt">
+                <input class="bt" type="reset" values="重置"/>
+            </li>
+        </ul>
+    </form>
+    <ul class="wz">
+        <li style="text-align: left;padding-left:3px">
+            <a href="#">忘记密码</a>
+        </li>
+        <li style="text-align:right;padding-right:3px">
+            <a href="html/register.html">注册</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

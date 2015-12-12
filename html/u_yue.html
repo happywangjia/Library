@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh" style="overflow-y: visible">
+<head>
+    <meta charset="UTF-8">
+    <title>借阅情况</title>
+    <script src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var httpRequest;
+        $(document).ready(function(){
+            httpRequest=new XMLHttpRequest();
+            httpRequest.onreadystatechange=handle1;
+            httpRequest.open("GET","../php/uYue.php?Num=1");
+            httpRequest.send();
+        })
+        function handle1(){
+            if(httpRequest.readyState==4&&httpRequest.status==200){
+                var response=httpRequest.responseText;
+                var res=eval("("+response+")");
+                var cnt=res['cnt'];
+                var sss=document.getElementById("sss");
+                for(var i=0;i<cnt;i++){
+                    var ul=document.createElement("ul");
+                    var tmp=res[''+i];
+                    var bookNum=tmp['bookNum'];
+                    var bookName=tmp['bookName'];
+                    var startTime=tmp['startTime'];
+                    var retuTime=tmp['retuTime'];
+                    var hasRetr=tmp['haRetr'];
+                    var actualRetu=tmp['actualRetu'];
+                    var fine=tmp['fine'];
+                    ul.innerHTML="<li>"+bookNum+"</li>"+
+                                    "<li>"+bookName+"</li>"+
+                                    "<li>"+startTime+"</li>"+
+                                    "<li>"+retuTime+"</li>";
+                    if(hasRetr==0){
+                        ul.innerHTML+="<li>未还</li>"+
+                                        "<li>－－－</li>"+
+                                        "<li>－－－</li>"
+                    }else{
+                        ul.innerHTML+="<li>已还</li>"+
+                                        "<li>"+actualRetu+"</li>"+
+                                        "<li>"+fine+"</li>";
+                    }
+                    sss.appendChild(ul);
+                }
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        #sss{
+            width:100%;
+            display: table;
+        }
+        #sss ul{
+            display: table-row;
+            list-style-type: none;
+        }
+        #sss li{
+            padding-top:15px;
+            display: table-cell;
+        }
+    </style>
+</head>
+<body>
+借阅：<br/>
+<div style="width:100%">
+    <div id="sss">
+        <ul>
+            <li>书号</li>
+            <li>书名</li>
+            <li>借书日期</li>
+            <li>应还日期</li>
+            <li>是否已还</li>
+            <li>还书日期</li>
+            <li>罚款</li>
+        </ul>
+    </div>
+</div>
+<div>
+
+</div>
+</body>
+</html>

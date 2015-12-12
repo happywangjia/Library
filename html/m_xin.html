@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员信息</title>
+    <link rel="stylesheet" type="text/css" href="../css/m_xin.css"/>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/m_xin.js"></script>
+</head>
+<body>
+<div>
+    <ul>
+        <li>
+            <a id="ji">基本信息</a>
+        </li>
+        <li>
+            账号：<a id="name"></a>
+        </li>
+        <li>
+            权限：<a id="priority"></a>
+        </li>
+        <li>
+            email：<a id="email" href="#" title="修改"  title="修改" onclick="gai(event,this)"></a>
+            <input type="text" style="width:180px;height:25px" maxlength="25" id="inputEmail" hidden/>
+        </li>
+        <li>
+            手机：<a id="telephone" href="#" title="修改"  title="修改" onclick="gai(event,this)"></a>
+            <input type="text" style="width:180px;height:25px" maxlength="25" id="inputTel" hidden/>
+        </li>
+        <li id="li" hidden>
+            <button onclick="jiao()" id="submit" style="margin-left:80px;margin-top:10px">提交</button>
+            <button onclick="xiao()" id="quxiao" style="margin-left:30px;margin-top:10px">取消</button>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

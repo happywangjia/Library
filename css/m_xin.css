@@ -1,0 +1,30 @@
+@charset "utf-8";
+html {
+    overflow: hidden;
+}
+
+body {
+    text-align: center;
+}
+
+div {
+    margin: 0 auto;
+    align-content: center;
+    width: 400px;
+    height: 300px;
+    border: 1px double black;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-top: 10px;
+    text-align: left;
+}
+
+#ji {
+    margin-left: 100px;
+    font-size: x-large;
+}

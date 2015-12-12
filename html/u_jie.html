@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>借书</title>
+    <style type="text/css">
+        @charset "utf-8";
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #sou {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding-top: 0;
+            height: 100%;
+            margin-left: 0;
+            width: 18%;
+            border-right: 2px solid #000000;
+        }
+
+        #sou form {
+            margin-top: 100px;
+            margin-left: 10px;
+        }
+
+        #sou form #jb {
+            margin-left: 3px;
+            width: 100px;
+            height: 22px;
+        }
+
+        #sou form #sss {
+            margin-top: 10px;
+            margin-left: 50px;
+            height: 28px;
+            font-size: 17px;
+        }
+
+        #content {
+            margin-left: 22%;
+            vertical-align: top;
+            margin-top: 20px;
+            height: 100%;
+            width: 82%;
+        }
+
+        #detail {
+            width: 100%;
+            display: table;
+        }
+
+        #lie {
+            display: table-row;
+            list-style-type: none;
+        }
+
+        #lie li {
+            display: table-cell;
+        }
+
+    </style>
+    <script type="text/javascript">
+        var httpRequest;
+        var str;
+        function sou(e) {
+            e.preventDefault();
+            str = document.getElementById("jb").value.trim();
+            if (str == "") {
+                alert("请输入搜索内容");
+                return;
+            }
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handler1;
+            httpRequest.open("GET", "../php/uJie.php?Num=1&content=" + str);
+            httpRequest.send();
+        }
+        var num;
+        var current = 1;
+        var page;
+        function handler1() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var ll1 = document.getElementById("detail");
+                ll1.innerHTML = "";
+                var ll2 = document.createElement("ul");
+                ll2.id = "lie";
+                ll2.innerHTML = "<li style='width:100px'>书号</li><li style='width:150px'>书名</li><li style='width:100px'>是否借书</li>";
+                ll1.appendChild(ll2);
+                var response = httpRequest.responseText;
+                var res = eval("(" + response + ")");
+                num = parseInt(res.Num);
+                if (num == 0) {
+                    ll1.innerHTML = "没有搜索内容";
+                    return;
+                }
+                var kk = parseInt(num / 10);
+                page = num % 10 == 0 ? kk : kk + 1;
+                var last1 = document.getElementById("last");
+                var next1 = document.getElementById("next");
+                if (current == 1) {
+                    last1.hidden = true;
+                }
+                if (current == page) {
+                    next1.hidden = true;
+                }
+                for (var i = 0; i < num && i < 10; i++) {
+                    add(res['' + i], i);
+                }
+                var fen = document.getElementById("fen");
+                fen.hidden = false;
+            }
+        }
+        function handler2() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var ll1 = document.getElementById("detail");
+                ll1.innerHTML = "";
+                var ll2 = document.createElement("ul");
+                ll2.id = "lie";
+                ll2.innerHTML = "<li style='width:100px'>书号</li><li style='width:150px'>书名</li><li style='width:100px'>是否借书</li>"
+                ll1.appendChild(ll2);
+                var response = httpRequest.responseText;
+                var res = eval("(" + response + ")");
+                var num2 = parseInt(res.Num);
+                var last1 = document.getElementById("last");
+                var next1 = document.getElementById("next");
+                if (current == 1) {
+                    last1.hidden = true;
+                } else {
+                    last1.hidden = false;
+                }
+                if (current == page) {
+                    next1.hidden = true;
+                } else {
+                    next1.hidden = false;
+                }
+                for (var i = 0; i < num2 && i < 10; i++) {
+                    add(res['' + i], i);
+                }
+                var fen = document.getElementById("fen");
+                fen.hidden = false;
+            }
+        }
+        var http2;
+        function getPage(now) {
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handler2;
+            httpRequest.open("GET", "../php/uJie.php?Num=2&content=" + str + "&page=" + now);
+            httpRequest.send();
+        }
+        function add(row, i) {
+            var divs = document.getElementById("detail");
+            var ull = document.createElement("ul");
+            ull.style.display = "table-row";
+            ull.style.liststyleType = "none";
+            ull.innerHTML = "<li style='display:table-cell;padding-top:20px;' id='id" + i + "'><a href='#' onclick='xiang(event,this)'>" + row['book_num'] + "</a></li>" +
+                    "<li style='display:table-cell'>" + row['book_name'] + "</li>";
+            //       "<li style='display:table-cell'>" + (row['is_borrow'] == 1 ? "已借" : "借书") + "</li>";
+            if (row['is_borrow'] == 1) {
+                ull.innerHTML += "<li style='display:table-cell'>已借</li>"
+            } else {
+                ull.innerHTML += "<li style='display: table-cell'><a href='#' onclick='jieShu(event,this)'>借书</a></li>";
+            }
+            divs.appendChild(ull);
+        }
+        var http4;
+        var jieObj;
+        function jieShu(e, obj) {
+            jieObj = obj;
+            e.preventDefault();
+            var learn_num = obj.parentNode.parentNode.firstChild.firstChild.innerHTML;
+            http4 = new XMLHttpRequest();
+            http4.onreadystatechange = handler4;
+            http4.open("GET", "../php/uJie.php?Num=4&bookNum=" + learn_num);
+            http4.send();
+        }
+        function handler4() {
+            if (http4.readyState == 4 && http4.status == 200) {
+                var response = http4.responseText;
+                var res = eval("(" + response + ")");
+                var num = parseInt(res['num']);
+                if (num == 0) {
+                    alert("借书超过上限！");
+                    return;
+                }
+                alert("借书成功");
+                jieObj.parentNode.innerHTML = "已借";
+            }
+        }
+        function getLast() {
+            current--;
+            getPage(current);
+        }
+        function getNext() {
+            current++;
+            getPage(current);
+        }
+        var http3;
+        function xiang(e, obj) {
+            e.preventDefault();
+            var str = obj.innerHTML;
+            http3 = new XMLHttpRequest();
+            http3.onreadystatechange = handler3;
+            http3.open("GET", "../php/uJie.php?Num=3&bookNum=" + str);
+            http3.send();
+        }
+        function handler3() {
+            if (http3.readyState == 4 && http3.status == 200) {
+                var response = http3.responseText;
+                var res = eval("(" + response + ")");
+                var data = "";
+                var bookName = res.bookName;
+                var isBorrow = res.isBorrow;
+                var intro = res.intro;
+                data += "书名：" + bookName + "\n";
+                if (isBorrow == 1) {
+                    data += "已借出" + "\n";
+                } else {
+                    data += "在馆" + "\n";
+                }
+                if (isBorrow == 1) {
+                    var jiePerson = res.jiePerson;
+                    data += "借书人：" + jiePerson + "\n";
+                    var reTime = res.reTime;
+                    data += "应还日期：" + reTime + "\n";
+                }
+                data += "介绍：" + intro + "\n";
+                alert(data);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div id="sou">
+    <form method="post" action="#">
+        书名<input id="jb" type="text" name="j_bookName"/><br/>
+        <input id="sss" type="submit" value="搜索" onclick="sou(event)"/>
+    </form>
+</div>
+<div id="content">
+    <div id="detail">
+
+    </div>
+    <ul style="list-style-type: none;width:100%" id="fen" hidden>
+        <li style="display: inline;margin-left:30%">
+            <a id="last" onclick="getLast(current)">上一页</a>
+        </li>
+        <li style="display: inline;margin-left:10%">
+            <a id="next" onclick="getNext(current)">下一页</a>
+        </li>
+    </ul>
+</div>
+
+
+</body>
+</html>

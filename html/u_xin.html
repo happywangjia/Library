@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <link rel="stylesheet" href="../css/u_xin.css" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/u_xin.js"></script>
+</head>
+<body>
+<div>
+    <ul>
+        <li>
+            <a id="ji">基本信息</a>
+        </li>
+        <li>
+            学号：<a id="learn_num"></a>
+        </li>
+        <li>
+            姓名：<a id="name"></a>
+        </li>
+        <li>
+            班级：<a id="grade"></a>
+        </li>
+        <li>
+            密码：<a href="#" id="password" onclick="gai(event,this)">修改</a>
+            <input type="password" style="width:180px;height:25px" maxlength="25" id="inputPass" hidden/>
+        </li>
+        <li>
+            email：<a href="#" id="email" title="修改"  onclick="gai(event,this)"></a>
+            <input type="text" style="width:180px;height:25px" maxlength="25" id="inputEmail" hidden/>
+        </li>
+        <li>
+            手机：<a href="#" id="telephone" title="修改" onclick="gai(event,this)"></a>
+            <input type="text" style="width:180px;height:25px" maxlength="25" id="inputTel" hidden/>
+        </li>
+        <li id="li" hidden>
+            <button onclick="jiao()" id="submit" style="margin-left:80px;margin-top:10px">提交</button>
+            <button onclick="xiao()" id="quxiao" style="margin-left:30px;margin-top:10px">取消</button>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>

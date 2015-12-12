@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户还书</title>
+    <script src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        var httpRequest;
+        $(document).ready(function(){
+            httpRequest=new XMLHttpRequest();
+            httpRequest.onreadystatechange=handle1;
+            httpRequest.open("GET","../php/uHuan.php?Num=1");
+            httpRequest.send();
+        })
+        function handle1(){
+            if(httpRequest.readyState==4&&httpRequest.status==200){
+                var response=httpRequest.responseText;
+                var res=eval("("+response+")");
+                var cnt=parseInt(res['cnt']);
+                var div=document.getElementById("ddd");
+                for(var i=0;i<cnt;i++){
+                    var tmp=res[''+i];
+                    var ul=document.createElement("ul");
+                    ul.innerHTML="<li>"+tmp['bookNum']+"</li>"+
+                                    "<li>"+tmp['bookName']+"</li>"+
+                                    "<li>"+tmp['startTime']+"</li>"+
+                                    "<li>"+tmp['retuTime']+"</li>"+
+                                    "<li><a href='#' onclick='huan(event,this)'>还书</a></li>"
+                    div.appendChild(ul);
+                }
+            }
+        }
+        var http2;
+        function huan(e,obj){
+            e.preventDefault();
+            var bookNum=obj.parentNode.parentNode.firstChild.innerHTML;
+            http2=new XMLHttpRequest();
+            http2.onreadystatechange=handle2;
+            http2.open("GET","../php/uHuan.php?Num=2&bookNum="+bookNum);
+            http2.send();
+
+        }
+        function handle2(){
+            if(http2.readyState==4&&http2.status==200){
+                var response=http2.responseText;
+                var res=eval("("+response+")");
+                var fine=parseFloat(res["fine"]);
+                if(Math.abs(fine)<0.5){
+                    alert("还书成功！");
+                }else{
+                    alert("还书成功，罚款"+fine+"元！");
+                }
+                location.reload();
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        #ddd{
+            display: table;
+        }
+        #ddd ul{
+            display:table-row;
+        }
+        #ddd li{
+            padding-top:15px;
+            display: table-cell;
+        }
+
+    </style>
+</head>
+<body>
+已借图书：<br/>
+<div style=":width:100%">
+    <div style="width:100%" id="ddd">
+        <ul class="tit" style="list-style-type: none">
+            <li>书号</li>
+            <li>书名</li>
+            <li>开始时间</li>
+            <li>应还时间</li>
+            <li>是否还书</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

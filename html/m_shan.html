@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除用户</title>
+    <script type="text/javascript">
+
+        var httpRequest;
+        function delUser(e) {
+            e.preventDefault();
+            var form = document.getElementById("form");
+            var formData = new FormData(form);
+            httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = handleResponse;
+            httpRequest.open("POST", "../php/shanUser.php");
+            httpRequest.send(formData);
+        }
+        function handleResponse() {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                var res = httpRequest.responseText;
+                var ress = eval("(" + res + ")");
+                var str = parseInt(ress.Num);
+                switch (str) {
+                    case 0:
+                        alert("请输入账号！");
+                        break;
+                    case 1:
+                        alert("该账号不存在！");
+                        break;
+                    case 2:
+                        alert("删除成功！");
+                        break;
+                    default:
+                        alert("输入有误！");
+                        break;
+                }
+            }
+        }
+        function press(e) {
+            document.getElementById("name").value = "";
+        }
+
+    </script>
+</head>
+<body>
+删除用户
+<form id="form">
+    <ul style="list-style-type:none;wdith:150px">
+        <li>
+            用户账号：<input type="text" id="name" style="width:100px;height:22px" maxlength="9" onclick="press(event)"
+                        name="name"/>
+        </li>
+        <li style="">
+            <input type="submit" style="margin-left:80px;margin-top:20px;width:80px" value="删除"
+                   onclick="delUser(event)"/>
+        </li>
+    </ul>
+</form>
+</body>
+</html>

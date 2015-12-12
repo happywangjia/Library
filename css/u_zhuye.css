@@ -1,0 +1,57 @@
+@charset "utf-8";
+
+html {
+    overflow: hidden;
+}
+
+#m_top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 200px;
+    background-color: #000000;
+}
+
+#m_top_ul {
+    display: inline;
+    list-style-image: none;
+}
+
+#m_top_ul li {
+    float: left;
+    margin-left: 40px;
+    margin-top: 170px;
+}
+
+#m_top_ul li a {
+    font-size: 20px;
+    text-decoration: none;
+    color: #ffffff;
+}
+#topinfo {
+    top: 50px;
+    right:15px;
+    position: absolute;
+}
+
+#topinfo img {
+    width: 100px;
+    height: 100px;
+}
+
+#topinfo a {
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 10px;
+    color: #ffffff;
+}
+
+#m_xiang {
+    position: absolute;
+    left: 0;
+    top: 200px;
+    width: 100%;
+    height: 100%;
+}
