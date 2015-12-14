@@ -67,6 +67,7 @@
         var httpRequest;
         var str;
         function sou(e) {
+			current=1;
             e.preventDefault();
             str = document.getElementById("jb").value.trim();
             if (str == "") {
@@ -79,7 +80,7 @@
             httpRequest.send();
         }
         var num;
-        var current = 1;
+        var current ;
         var page;
         function handler1() {
             if (httpRequest.readyState == 4 && httpRequest.status == 200) {
@@ -102,10 +103,14 @@
                 var next1 = document.getElementById("next");
                 if (current == 1) {
                     last1.hidden = true;
-                }
+				}else{
+					last1.hidden=false;
+				}
                 if (current == page) {
                     next1.hidden = true;
-                }
+				}else{
+					next1.hidden=false;
+				}
                 for (var i = 0; i < num && i < 10; i++) {
                     add(res['' + i], i);
                 }

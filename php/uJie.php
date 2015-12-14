@@ -62,7 +62,7 @@ if($Num==1){
 		$res2=$res->fetch_assoc();
 		$reTime=$res2['retu_time'];
 		$arr['reTime']=$reTime;
-		$sql="select name from ahu_uinfo where learn_num='".$_SESSION['uName']."';";
+		$sql="select name from ahu_uinfo where learn_num='".$jiePerson."';";
 		$arr['jiePerson']=$conn->query($sql)->fetch_assoc()['name'];
 		$res->free();
 	}
